@@ -16,11 +16,11 @@ Add-Type -TypeDefinition $code
 $shell = New-Object -ComObject Shell.Application
 $shell.MinimizeAll()
 $title = " 0_0 "
-$msg = "   ты за овального ?   "
+$msg = "$([char]1090+[char]1099+[char]32+[char]1079+[char]1072+[char]32+[char]1086+[char]1074+[char]1072+[char]1083+[char]1100+[char]1085+[char]1086+[char]1075+[char]1086+[char]63+[char]63+[char]63+[char]63+[char]63)"
 $result = [System.Windows.Forms.MessageBox]::Show($msg, $title, [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Warning)
 if ($result -eq [System.Windows.Forms.DialogResult]::No) {
-    $url = "https://raw.githubusercontent.com/lzfep/a/refs/heads/main/n.jpg"
-    $fileName = "ПРИВЕТ.jpg"
+    $url = "https://raw.githubusercontent.com/lozep/a/refs/heads/main/n.jpg"
+    $fileName = "$([char]0x041F)$([char]0x0420)$([char]0x0418)$([char]0x0412)$([char]0x0415)$([char]0x0422).jpg"
     $tempPath = Join-Path $env:TEMP $fileName
     try {
         Invoke-WebRequest -Uri $url -OutFile $tempPath
