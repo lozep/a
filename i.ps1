@@ -1,3 +1,4 @@
+Add-Type -AssemblyName System.Windows.Forms
 $url = "https://raw.githubusercontent.com/lozep/a/refs/heads/main/l.png"
 $path = "$env:TEMP\i.png"
 Invoke-WebRequest -Uri $url -OutFile $path
