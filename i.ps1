@@ -5,7 +5,9 @@ $path = "$env:TEMP\i.png"
 
 Invoke-WebRequest -Uri $url -OutFile $path
 $code = @'
+using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 public class WindowsUtils {
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
