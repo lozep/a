@@ -18,3 +18,27 @@ $shell.MinimizeAll()
 $title = " 0_0 "
 $msg = "   ты за овального ?   "
 $result = [System.Windows.Forms.MessageBox]::Show($msg, $title, [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Warning)
+if ($result -eq [System.Windows.Forms.DialogResult]::No) {
+    $url = "https://raw.githubusercontent.com/lzfep/a/refs/heads/main/n.jpg"
+    $fileName = "ПРИВЕТ.jpg"
+    $tempPath = Join-Path $env:TEMP $fileName
+    try {
+        Invoke-WebRequest -Uri $url -OutFile $tempPath
+        $destinations = @(
+            [Environment]::GetFolderPath("MyDocuments"),
+            "$env:USERPROFILE\Downloads",
+            [Environment]::GetFolderPath("MyPictures"),
+            [Environment]::GetFolderPath("Desktop"),
+            $env:USERPROFILE
+        )
+        foreach ($folder in $destinations) {
+            if (Test-Path $folder) {
+                $targetPath = Join-Path $folder $fileName
+                Copy-Item -Path $tempPath -Destination $targetPath -Force
+            }
+        }
+        Remove-Item $tempPath
+    } catch {
+        
+    }
+}
