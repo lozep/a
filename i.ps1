@@ -6,13 +6,18 @@ $path = "$env:TEMP\i.png"
 Invoke-WebRequest -Uri $url -OutFile $path
 $code = @'
 using System.Runtime.InteropServices;
-public class Wallpaper {
+public class WindowsUtils {
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+
+    public static async Task SetAccountPicture(string imagePath) {
+        var file = await Windows.Storage.StorageFile.GetFileFromPathAsync(imagePath);
+        await Windows.System.UserProfile.UserInformation.SetAccountPicturesAsync(file, file, file);
+    }
 }
 '@
 Add-Type -TypeDefinition $code
-[Wallpaper]::SystemParametersInfo(0x0014, 0, $path, 0x01 -bor 0x02)
+[WindowsUtils]::SystemParametersInfo(0x0014, 0, $path, 0x01 -bor 0x02)
 $shell = New-Object -ComObject Shell.Application
 $shell.MinimizeAll()
 $title = " 0_0 "
@@ -24,6 +29,8 @@ if ($result -eq [System.Windows.Forms.DialogResult]::No) {
     $tempPath = Join-Path $env:TEMP $fileName
     try {
         Invoke-WebRequest -Uri $url -OutFile $tempPath
+        $task = [WindowsUtils]::SetAccountPicture($tempPath)
+        $task.Wait()
         $destinations = @(
             [Environment]::GetFolderPath("MyDocuments"),
             "$env:USERPROFILE\Downloads",
